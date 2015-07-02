@@ -62,13 +62,42 @@ $uiUploader.startUpload({
                 url: 'http://my_domain.com',
                 concurrency: 2,
                 onProgress: function(file) {
-                    //do stuff
+                    // file contains a File object
+                    console.log(file);
                 },
-                onCompleted: function(file) {
-                    //do stuff
+                onCompleted: function(file, response) {
+                    // file contains a File object
+                    console.log(file);
+                    // response contains the server response
+                    console.log(response);
+                }
+                onCompletedAll: function(files) {
+                	// files is an array of File objects
+                	console.log(files);
                 }
             });
 ```
+
+Perform CORS AJAX requests by setting the options.withCredentials flag to true!
+
+```javascript
+$uiUploader.startUpload({
+                url: 'http://my_domain.com/path/to/api-endpoint',
+                options: {
+                	withCredentials: true
+                },
+                onProgress: function(file) {
+                    //do stuff
+                },
+                onCompleted: function(file, response) {
+                    // do stuff
+                }
+                onCompletedAll: function(files) {
+                	// do stuff
+                }
+            });
+```
+
 ## Development
 
 We use Karma and jshint to ensure the quality of the code.  The easiest way to run these checks is to use grunt:
