@@ -47,7 +47,7 @@ function uiUploader($log) {
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.options);
         }
     }
 
@@ -74,13 +74,17 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function ajaxUpload(file, url, data) {
+    function ajaxUpload(file, url, data, options) {
         var xhr, formData, prop, key = '' || 'file';
         data = data || {};
 
         self.activeUploads += 1;
         file.active = true;
         xhr = new window.XMLHttpRequest();
+        // To account for sites that may require CORS
+        if(options.withCredentials == true) {
+        	xhr.withCredentials = true;
+        }
         formData = new window.FormData();
         xhr.open('POST', url);
 
