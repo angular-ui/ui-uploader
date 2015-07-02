@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.0.0 - 2015-07-01T01:57:39.947Z
+ * Version: 1.0.0 - 2015-07-03T04:13:10.789Z
  * License: MIT
  */
 
@@ -81,6 +81,12 @@ function uiUploader($log) {
         self.activeUploads += 1;
         file.active = true;
         xhr = new window.XMLHttpRequest();
+
+        // To account for sites that may require CORS
+        if (data.withCredentials === true) {
+            xhr.withCredentials = true;
+        }
+
         formData = new window.FormData();
         xhr.open('POST', url);
 

@@ -71,6 +71,12 @@ function uiUploader($log) {
         self.activeUploads += 1;
         file.active = true;
         xhr = new window.XMLHttpRequest();
+
+        // To account for sites that may require CORS
+        if (data.withCredentials === true) {
+            xhr.withCredentials = true;
+        }
+
         formData = new window.FormData();
         xhr.open('POST', url);
 
