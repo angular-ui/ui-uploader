@@ -1,4 +1,4 @@
-# ui-uploader [![Build Status](https://travis-ci.org/angular-ui/ui-uploader.svg?branch=master)](https://travis-ci.org/angular-ui/ui-uploader)
+# ui-uploader [![Build Status](https://travis-ci.org/angular-ui/ui-uploader.svg?branch=master)](https://travis-ci.org/angular-ui/ui-uploader) [![npm version](https://badge.fury.io/js/angular-ui-uploader.svg)](http://badge.fury.io/js/angular-ui-uploader) [![Bower version](https://badge.fury.io/bo/angular-ui-uploader.svg)](http://badge.fury.io/bo/angular-ui-uploader) [![Join the chat at https://gitter.im/angular-ui/ui-uploader](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-ui/ui-uploader?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ui-uploader is a single/multiple and high customizable file uploader and the most important is very easy to implement.
 
