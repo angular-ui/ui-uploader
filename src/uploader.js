@@ -103,7 +103,7 @@ function uiUploader($log) {
             self.activeUploads -= 1;
             self.uploadedFiles += 1;
             startUpload(self.options);
-            self.options.onCompleted(file, xhr.responseText);
+            self.options.onCompleted(file, xhr.responseText, xhr.status);
             if (self.uploadedFiles === self.files.length) {
                 self.uploadedFiles = 0;
                 self.options.onCompletedAll(self.files);
