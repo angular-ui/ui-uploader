@@ -60,7 +60,7 @@ function uiUploader($log) {
 
     function getHumanSize(bytes) {
         var sizes = ['n/a', 'bytes', 'KiB', 'MiB', 'GiB', 'TB', 'PB', 'EiB', 'ZiB', 'YiB'];
-        var i = +Math.floor(Math.log(bytes) / Math.log(1024));
+        var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
