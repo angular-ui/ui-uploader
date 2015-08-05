@@ -116,7 +116,9 @@ function uiUploader($log) {
 
         // Triggered when upload fails:
         xhr.onerror = function(e) {
-            self.options.onError(e);
+            if (isFunction(self.options.onError)) {
+                self.options.onError(e);
+            } 
         };
 
         // Append additional data if provided:
