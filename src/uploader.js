@@ -37,7 +37,7 @@ function uiUploader($log) {
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.headers, self.options.httpMethod, self.options.key);
         }
     }
 
@@ -64,9 +64,12 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function ajaxUpload(file, url, data) {
-        var xhr, formData, prop, key = '' || 'file';
+    function ajaxUpload(file, url, data, headers, httpMethod, key) {
+        var xhr, formData, prop;
+        key = key || 'file';
         data = data || {};
+        httpMethod = httpMethod || 'POST';
+        headers = headers || [];
 
         self.activeUploads += 1;
         file.active = true;
@@ -78,7 +81,7 @@ function uiUploader($log) {
         }
 
         formData = new window.FormData();
-        xhr.open('POST', url);
+        xhr.open(httpMethod, url);
 
         // Triggered when upload starts:
         xhr.upload.onloadstart = function() {
@@ -125,6 +128,12 @@ function uiUploader($log) {
 
         // Append file data:
         formData.append(key, file, file.name);
+
+        if (headers.length) {
+            for (var i = 0; i < headers.length; i++) {
+                xhr.setRequestHeader(headers[i].key, headers[i].value);
+            }
+        }
 
         // Initiate upload:
         xhr.send(formData);
