@@ -19,7 +19,7 @@ Try the [demo](http://realtica.org/ng-uploader/demo.html).
 Compatibility
 -------------
 
-Because this project use [FormData](http://caniuse.com/#search=formdata), it does **not** work on IE9 or earlier.
+Because this project uses [FormData](http://caniuse.com/#search=formdata), it does **not** work on IE9 or earlier.
 
 ## Requirements
 
