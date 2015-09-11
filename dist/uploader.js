@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.0.0 - 2015-07-16T11:01:03.833Z
+ * Version: 1.1.1 - 2015-08-05T02:10:41.396Z
  * License: MIT
  */
 
@@ -70,7 +70,7 @@ function uiUploader($log) {
 
     function getHumanSize(bytes) {
         var sizes = ['n/a', 'bytes', 'KiB', 'MiB', 'GiB', 'TB', 'PB', 'EiB', 'ZiB', 'YiB'];
-        var i = +Math.floor(Math.log(bytes) / Math.log(1024));
+        var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 

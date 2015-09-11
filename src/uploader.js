@@ -60,8 +60,12 @@ function uiUploader($log) {
 
     function getHumanSize(bytes) {
         var sizes = ['n/a', 'bytes', 'KiB', 'MiB', 'GiB', 'TB', 'PB', 'EiB', 'ZiB', 'YiB'];
-        var i = +Math.floor(Math.log(bytes) / Math.log(1024));
+        var i = (bytes === 0) ? 0 : +Math.floor(Math.log(bytes) / Math.log(1024));
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
+    }
+
+    function isFunction(entity) {
+        return typeof(entity) === typeof(Function);
     }
 
     function ajaxUpload(file, url, data) {
@@ -111,7 +115,10 @@ function uiUploader($log) {
         };
 
         // Triggered when upload fails:
-        xhr.onerror = function() {
+        xhr.onerror = function(e) {
+            if (isFunction(self.options.onError)) {
+                self.options.onError(e);
+            }
         };
 
         // Append additional data if provided:

@@ -19,7 +19,7 @@ Try the [demo](http://realtica.org/ng-uploader/demo.html).
 Compatibility
 -------------
 
-Because this project use [FormData](http://caniuse.com/#search=formdata), it does **not** work on IE9 or earlier.
+Because this project uses [FormData](http://caniuse.com/#search=formdata), it does **not** work on IE9 or earlier.
 
 ## Requirements
 
@@ -38,7 +38,7 @@ Load the script files in your application:
 
 ```html
 <script type="text/javascript" src="bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-uploader/dist/ui-uploader.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-uploader/dist/uploader.js"></script>
 ```
 
 Add the specific module to your dependencies:
@@ -117,11 +117,10 @@ The karma task will try to open Firefox and Chrome as browser in which to run th
 
 ### How to release
 
-Use npm to update version and create a tag, then push to GitHub:
+Use gulp to bump version, build and create a tag. Then push to GitHub:
 
 ````sh
-gulp && git commit . # if necessary, build everything and commit latest changes
-npm version [major | minor | patch] # let npm update package.json and create a tag
+gulp release [--patch|--minor|--major]
 git push --tags origin master # push everything to GitHub
 ````
 
