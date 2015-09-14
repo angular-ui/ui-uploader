@@ -81,6 +81,11 @@ function uiUploader($log) {
             xhr.withCredentials = true;
         }
 
+        // Transferring timeout from options
+        if (data.timeout) {
+            xhr.timeout = data.timeout;
+        }
+
         formData = new window.FormData();
         xhr.open('POST', url);
 
