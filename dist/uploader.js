@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.1.1 - 2015-08-05T02:10:41.396Z
+ * Version: 1.1.2 - 2015-10-27T03:09:52.784Z
  * License: MIT
  */
 
@@ -74,6 +74,10 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
+    function isFunction(entity) {
+        return typeof(entity) === typeof(Function);
+    }
+
     function ajaxUpload(file, url, data) {
         var xhr, formData, prop, key = '' || 'file';
         data = data || {};
@@ -105,7 +109,9 @@ function uiUploader($log) {
             //console.info(event.loaded);
             file.loaded = event.loaded;
             file.humanSize = getHumanSize(event.loaded);
-            self.options.onProgress(file);
+            if (isFunction(self.options.onProgress)) {
+                self.options.onProgress(file);
+            }
         };
 
         // Triggered when upload is completed:
@@ -113,15 +119,22 @@ function uiUploader($log) {
             self.activeUploads -= 1;
             self.uploadedFiles += 1;
             startUpload(self.options);
-            self.options.onCompleted(file, xhr.responseText, xhr.status);
+            if (isFunction(self.options.onCompleted)) {
+                self.options.onCompleted(file, xhr.responseText, xhr.status);
+            }            
             if (self.uploadedFiles === self.files.length) {
                 self.uploadedFiles = 0;
-                self.options.onCompletedAll(self.files);
+                if (isFunction(self.options.onCompletedAll)) {
+                    self.options.onCompletedAll(self.files);
+                }
             }
         };
 
         // Triggered when upload fails:
-        xhr.onerror = function() {
+        xhr.onerror = function(e) {
+            if (isFunction(self.options.onError)) {
+                self.options.onError(e);
+            }
         };
 
         // Append additional data if provided:
