@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.1.1 - 2015-08-05T02:10:41.396Z
+ * Version: 1.1.2 - 2015-09-14T08:15:55.941Z
  * License: MIT
  */
 
@@ -74,6 +74,10 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
+    function isFunction(entity) {
+        return typeof(entity) === typeof(Function);
+    }
+
     function ajaxUpload(file, url, data) {
         var xhr, formData, prop, key = '' || 'file';
         data = data || {};
@@ -85,6 +89,11 @@ function uiUploader($log) {
         // To account for sites that may require CORS
         if (data.withCredentials === true) {
             xhr.withCredentials = true;
+        }
+
+        // Transferring timeout from options
+        if (data.timeout) {
+            xhr.timeout = data.timeout;
         }
 
         formData = new window.FormData();
@@ -121,7 +130,10 @@ function uiUploader($log) {
         };
 
         // Triggered when upload fails:
-        xhr.onerror = function() {
+        xhr.onerror = function(e) {
+            if (isFunction(self.options.onError)) {
+                self.options.onError(e);
+            }
         };
 
         // Append additional data if provided:
