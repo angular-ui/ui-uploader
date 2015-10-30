@@ -85,10 +85,11 @@ function uiUploader($log) {
         xhr.open('POST', url);
 
         // Set headers if any exists
-        if (headers && Array.isArray(headers)) {
-            for (var i = 0; i < headers.length; i++) {
-                var header = headers[i];
-                xhr.setRequestHeader(header.name, header.value);
+        if (headers) {
+            for (var headerName in headers) {
+                if (headers.hasOwnProperty(headerName)) {
+                    xhr.setRequestHeader(headerName, headers[headerName]);
+                }
             }
         }
 
