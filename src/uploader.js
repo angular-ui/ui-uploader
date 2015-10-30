@@ -37,7 +37,7 @@ function uiUploader($log) {
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.options.headers);
         }
     }
 
@@ -68,7 +68,7 @@ function uiUploader($log) {
         return typeof(entity) === typeof(Function);
     }
 
-    function ajaxUpload(file, url, data) {
+    function ajaxUpload(file, url, data, headers) {
         var xhr, formData, prop, key = '' || 'file';
         data = data || {};
 
@@ -83,6 +83,15 @@ function uiUploader($log) {
 
         formData = new window.FormData();
         xhr.open('POST', url);
+
+        // Set headers if any exists
+        if (headers) {
+            for (var headerName in headers) {
+                if (headers.hasOwnProperty(headerName)) {
+                    xhr.setRequestHeader(headerName, headers[headerName]);
+                }
+            }
+        }
 
         // Triggered when upload starts:
         xhr.upload.onloadstart = function() {
