@@ -69,7 +69,7 @@ function uiUploader($log) {
     }
 
     function ajaxUpload(file, url, data) {
-        var xhr, formData, prop, key = '' || 'file';
+        var xhr, formData, prop, key = 'file';
         data = data || {};
 
         self.activeUploads += 1;
