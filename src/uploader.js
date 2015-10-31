@@ -64,10 +64,6 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function isFunction(entity) {
-        return typeof(entity) === typeof(Function);
-    }
-
     function ajaxUpload(file, url, data) {
         var xhr, formData, prop, key = '' || 'file';
         data = data || {};
@@ -99,7 +95,7 @@ function uiUploader($log) {
             //console.info(event.loaded);
             file.loaded = event.loaded;
             file.humanSize = getHumanSize(event.loaded);
-            if (isFunction(self.options.onProgress)) {
+            if (angular.isFunction(self.options.onProgress)) {
                 self.options.onProgress(file);
             }
         };
@@ -109,12 +105,12 @@ function uiUploader($log) {
             self.activeUploads -= 1;
             self.uploadedFiles += 1;
             startUpload(self.options);
-            if (isFunction(self.options.onCompleted)) {
+            if (angular.isFunction(self.options.onCompleted)) {
                 self.options.onCompleted(file, xhr.responseText, xhr.status);
             }            
             if (self.uploadedFiles === self.files.length) {
                 self.uploadedFiles = 0;
-                if (isFunction(self.options.onCompletedAll)) {
+                if (angular.isFunction(self.options.onCompletedAll)) {
                     self.options.onCompletedAll(self.files);
                 }
             }
@@ -122,7 +118,7 @@ function uiUploader($log) {
 
         // Triggered when upload fails:
         xhr.onerror = function(e) {
-            if (isFunction(self.options.onError)) {
+            if (angular.isFunction(self.options.onError)) {
                 self.options.onError(e);
             }
         };
