@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.1.2 - 2015-11-30T14:25:59.048Z
+ * Version: 1.1.3 - 2015-11-30T14:27:22.587Z
  * License: MIT
  */
 
