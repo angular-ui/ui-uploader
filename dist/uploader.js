@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.1.2 - 2015-10-27T03:09:52.784Z
+ * Version: 1.1.3 - 2015-11-30T14:27:22.587Z
  * License: MIT
  */
 
@@ -41,13 +41,17 @@ function uiUploader($log) {
 
     function startUpload(options) {
         self.options = options;
+
+        //headers are not shared by requests
+        var headers = options.headers || {};
+
         for (var i = 0; i < self.files.length; i++) {
             if (self.activeUploads == self.options.concurrency) {
                 break;
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, headers);
         }
     }
 
@@ -74,12 +78,8 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function isFunction(entity) {
-        return typeof(entity) === typeof(Function);
-    }
-
-    function ajaxUpload(file, url, data) {
-        var xhr, formData, prop, key = '' || 'file';
+    function ajaxUpload(file, url, data, headers) {
+        var xhr, formData, prop, key = 'file';
         data = data || {};
 
         self.activeUploads += 1;
@@ -93,6 +93,14 @@ function uiUploader($log) {
 
         formData = new window.FormData();
         xhr.open('POST', url);
+
+        if (headers) {
+            for (var headerKey in headers) {
+                if (headers.hasOwnProperty(headerKey)) {
+                    xhr.setRequestHeader(headerKey, headers[headerKey]);
+                }
+            }
+        }
 
         // Triggered when upload starts:
         xhr.upload.onloadstart = function() {
@@ -109,7 +117,7 @@ function uiUploader($log) {
             //console.info(event.loaded);
             file.loaded = event.loaded;
             file.humanSize = getHumanSize(event.loaded);
-            if (isFunction(self.options.onProgress)) {
+            if (angular.isFunction(self.options.onProgress)) {
                 self.options.onProgress(file);
             }
         };
@@ -119,12 +127,12 @@ function uiUploader($log) {
             self.activeUploads -= 1;
             self.uploadedFiles += 1;
             startUpload(self.options);
-            if (isFunction(self.options.onCompleted)) {
+            if (angular.isFunction(self.options.onCompleted)) {
                 self.options.onCompleted(file, xhr.responseText, xhr.status);
             }            
             if (self.uploadedFiles === self.files.length) {
                 self.uploadedFiles = 0;
-                if (isFunction(self.options.onCompletedAll)) {
+                if (angular.isFunction(self.options.onCompletedAll)) {
                     self.options.onCompletedAll(self.files);
                 }
             }
@@ -132,7 +140,7 @@ function uiUploader($log) {
 
         // Triggered when upload fails:
         xhr.onerror = function(e) {
-            if (isFunction(self.options.onError)) {
+            if (angular.isFunction(self.options.onError)) {
                 self.options.onError(e);
             }
         };

@@ -98,6 +98,22 @@ $uiUploader.startUpload({
             });
 ```
 
+Configure custom request headers by options.headers field
+
+```javascript
+$uiUploader.startUpload({
+                url: 'http://my_domain.com',
+                concurrency: 2,
+                headers: {
+                    'Accept': 'application/json'
+                },
+                onCompletedAll: function(files) {
+                	// files is an array of File objects
+                	console.log(files);
+                }
+            });
+```
+
 ## Development
 
 We use Karma and jshint to ensure the quality of the code.  The easiest way to run these checks is to use grunt:
