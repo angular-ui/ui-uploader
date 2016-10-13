@@ -123,7 +123,7 @@ function uiUploader($log) {
         };
 
         // Triggered when upload is completed:
-        xhr.onload = function() {
+        xhr.upload.onload = function() {
             self.activeUploads -= 1;
             self.uploadedFiles += 1;
             startUpload(self.options);
@@ -139,7 +139,7 @@ function uiUploader($log) {
         };
 
         // Triggered when upload fails:
-        xhr.onerror = function(e) {
+        xhr.upload.onerror = function(e) {
             if (angular.isFunction(self.options.onError)) {
                 self.options.onError(e);
             }
