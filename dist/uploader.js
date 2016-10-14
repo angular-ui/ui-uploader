@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.1.3 - 2015-12-01T00:54:49.732Z
+ * Version: 1.1.3 - 2016-10-14T09:15:10.906Z
  * License: MIT
  */
 
@@ -123,7 +123,7 @@ function uiUploader($log) {
         };
 
         // Triggered when upload is completed:
-        xhr.onload = function() {
+        xhr.upload.onload = function() {
             self.activeUploads -= 1;
             self.uploadedFiles += 1;
             startUpload(self.options);
@@ -139,7 +139,7 @@ function uiUploader($log) {
         };
 
         // Triggered when upload fails:
-        xhr.onerror = function(e) {
+        xhr.upload.onerror = function(e) {
             if (angular.isFunction(self.options.onError)) {
                 self.options.onError(e);
             }
