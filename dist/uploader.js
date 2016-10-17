@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.2.0 - 2016-10-14T11:07:02.591Z
+ * Version: 1.2.1 - 2016-10-17T11:29:10.175Z
  * License: MIT
  */
 
@@ -130,7 +130,7 @@ function uiUploader($log) {
             if (angular.isFunction(self.options.onCompleted)) {
                 self.options.onCompleted(file, xhr.responseText, xhr.status);
             }            
-            if (self.uploadedFiles === self.files.length) {
+            if (self.activeUploads === 0) {
                 self.uploadedFiles = 0;
                 if (angular.isFunction(self.options.onCompletedAll)) {
                     self.options.onCompletedAll(self.files);
