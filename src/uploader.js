@@ -112,19 +112,11 @@ function uiUploader($log) {
             }
         };
 
-        // Triggered when upload is completed:
+        // Triggered when the upload is successful (the server may not have responded yet).
         xhr.upload.onload = function() {
-            self.activeUploads -= 1;
-            self.uploadedFiles += 1;
-            startUpload(self.options);
-            if (angular.isFunction(self.options.onCompleted)) {
-                self.options.onCompleted(file, xhr.responseText, xhr.status);
-            }            
-            if (self.activeUploads === 0) {
-                self.uploadedFiles = 0;
-                if (angular.isFunction(self.options.onCompletedAll)) {
-                    self.options.onCompletedAll(self.files);
-                }
+
+            if (angular.isFunction(self.options.onUploadSuccess)) {
+                self.options.onUploadSuccess(file);
             }
         };
 
@@ -132,6 +124,27 @@ function uiUploader($log) {
         xhr.upload.onerror = function(e) {
             if (angular.isFunction(self.options.onError)) {
                 self.options.onError(e);
+            }
+        };
+
+        // Triggered when the upload has completed AND the server has responded. Equivalent to
+        // listening for the readystatechange event when xhr.readyState === XMLHttpRequest.DONE.
+        xhr.onload = function () {
+
+            self.activeUploads -= 1;
+            self.uploadedFiles += 1;
+
+            startUpload(self.options);
+
+            if (angular.isFunction(self.options.onCompleted)) {
+                self.options.onCompleted(file, xhr.responseText, xhr.status);
+            }
+
+            if (self.activeUploads === 0) {
+                self.uploadedFiles = 0;
+                if (angular.isFunction(self.options.onCompletedAll)) {
+                    self.options.onCompletedAll(self.files);
+                }
             }
         };
 
