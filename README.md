@@ -80,7 +80,7 @@ $uiUploader.startUpload({
                 onCompletedAll: function(files) {
                 	// files is an array of File objects
                 	console.log(files);
-                },
+                }
             });
 ```
 
