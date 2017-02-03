@@ -53,4 +53,32 @@ describe('uiUploader', function() {
             expect(uiUploader.files).toEqual(files);
         });
     });
+
+    describe('#startUpload', function() {
+        var formData;
+        var file;
+
+        beforeEach(function() {
+            file = new File([''], 'testFile');
+            formData = {
+                append: jasmine.createSpy()
+            };
+
+            uiUploader.addFiles([file]);
+
+            spyOn(window, 'FormData').and.returnValue(formData);
+        });
+
+        describe('with a specified paramName', function() {
+            beforeEach(function() {
+                uiUploader.startUpload({
+                    paramName: 'test'
+                });
+            });
+
+            it('sets the paramName when appending the formdata', function() {
+                expect(formData.append).toHaveBeenCalledWith('test', file, 'testFile');
+            });
+        });
+    });
 });
