@@ -41,7 +41,7 @@ function uiUploader($log) {
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data, headers);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.paramName, headers);
         }
     }
 
@@ -68,9 +68,10 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function ajaxUpload(file, url, data, headers) {
-        var xhr, formData, prop, key = 'file';
+    function ajaxUpload(file, url, data, key, headers) {
+        var xhr, formData, prop;
         data = data || {};
+        key = key || 'file';
 
         self.activeUploads += 1;
         file.active = true;

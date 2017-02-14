@@ -10,6 +10,8 @@ before_install:
 - npm install -q
 - bower install --force
 - bower install --force
+addons:
+  firefox: latest
 script: gulp
 deploy:
   provider: npm
