@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.3.0 - 2016-11-10T00:39:35.417Z
+ * Version: 1.4.0 - 2017-02-14T02:35:18.253Z
  * License: MIT
  */
 
@@ -51,7 +51,7 @@ function uiUploader($log) {
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data, headers);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.paramName, headers);
         }
     }
 
@@ -78,9 +78,10 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function ajaxUpload(file, url, data, headers) {
-        var xhr, formData, prop, key = 'file';
+    function ajaxUpload(file, url, data, key, headers) {
+        var xhr, formData, prop;
         data = data || {};
+        key = key || 'file';
 
         self.activeUploads += 1;
         file.active = true;
