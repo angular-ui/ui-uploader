@@ -1,7 +1,7 @@
 /*!
  * angular-ui-uploader
  * https://github.com/angular-ui/ui-uploader
- * Version: 1.4.0 - 2017-02-14T02:35:18.253Z
+ * Version: 1.4.1 - 2017-04-20T06:14:06.100Z
  * License: MIT
  */
 
@@ -44,6 +44,7 @@ function uiUploader($log) {
 
         //headers are not shared by requests
         var headers = options.headers || {};
+        var xhrOptions = options.options || {};
 
         for (var i = 0; i < self.files.length; i++) {
             if (self.activeUploads == self.options.concurrency) {
@@ -51,7 +52,7 @@ function uiUploader($log) {
             }
             if (self.files[i].active)
                 continue;
-            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.paramName, headers);
+            ajaxUpload(self.files[i], self.options.url, self.options.data, self.options.paramName, headers, xhrOptions);
         }
     }
 
@@ -78,7 +79,7 @@ function uiUploader($log) {
         return (bytes / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + sizes[isNaN(bytes) ? 0 : i + 1];
     }
 
-    function ajaxUpload(file, url, data, key, headers) {
+    function ajaxUpload(file, url, data, key, headers, xhrOptions) {
         var xhr, formData, prop;
         data = data || {};
         key = key || 'file';
@@ -88,7 +89,7 @@ function uiUploader($log) {
         xhr = new window.XMLHttpRequest();
 
         // To account for sites that may require CORS
-        if (data.withCredentials === true) {
+        if (xhrOptions.withCredentials === true) {
             xhr.withCredentials = true;
         }
 
