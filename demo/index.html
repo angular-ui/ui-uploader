@@ -69,7 +69,7 @@
                         <div ng-repeat="file in files" style="margin-top: 20px;border-bottom-color: antiquewhite;border-bottom-style: double;">
                             <div><span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
                             </div>
-                            <progress style="width:400px;" value="{{file.loaded}}" max="{{file.size}}"></progress>
+                            <progress style="width:400px;" value="{{file.loaded ? file.loaded : 0}}" max="{{file.size}}"></progress>
                         </div>
                     </div>
                 </div>
