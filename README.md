@@ -13,7 +13,7 @@ You can use with html5, jquery or every library or framework:
 >  to have a user control, clean, simple, customizable,
 > and above all very easy to implement.
 
-Try the [demo](https://htmlpreview.github.io/?https://github.com/angular-ui/ui-uploader/master/demo/index.html).
+Try the [demo](https://rawgit.com/angular-ui/ui-uploader/master/demo/index.html).
 
 
 Compatibility
